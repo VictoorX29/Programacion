@@ -17,6 +17,9 @@ public class Formulario1 extends javax.swing.JFrame {
      */
     public Formulario1() {
         initComponents();
+        this.setTitle("Formulario 1");
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**
@@ -28,21 +31,79 @@ public class Formulario1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton2 = new javax.swing.JButton();
+        btnFormulario2 = new javax.swing.JButton();
+        btnIrCalendario = new javax.swing.JButton();
+        btnIrImagenes = new javax.swing.JButton();
+
+        jButton2.setText("Ir al Calendario");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnFormulario2.setText("Ir al Formulario 2");
+        btnFormulario2.addActionListener(this::btnFormulario2ActionPerformed);
+
+        btnIrCalendario.setText("Ir al Calendario");
+        btnIrCalendario.addActionListener(this::btnIrCalendarioActionPerformed);
+
+        btnIrImagenes.setText("Ir a Imágenes");
+        btnIrImagenes.addActionListener(this::btnIrImagenesActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(btnFormulario2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnIrCalendario)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(btnIrImagenes)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(btnFormulario2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIrCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIrImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFormulario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormulario2ActionPerformed
+        Formulario2 f = new Formulario2("Texto mandado con el constructor");
+        f.setVisible(true);
+        this.dispose(); // Cierra el formulario actual
+        f.lblEtiqueta1.setText("Texto a etiqueta pública");
+        f.textoEtiqueta2 = "Texto mandado a un atributo";
+    }//GEN-LAST:event_btnFormulario2ActionPerformed
+
+    private void btnIrCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrCalendarioActionPerformed
+        Calendario c = new Calendario();
+        c.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIrCalendarioActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnIrImagenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrImagenesActionPerformed
+        Imagenes i = new Imagenes();
+        i.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIrImagenesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +131,9 @@ public class Formulario1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFormulario2;
+    private javax.swing.JButton btnIrCalendario;
+    private javax.swing.JButton btnIrImagenes;
+    private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 }
