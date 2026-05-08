@@ -24,6 +24,21 @@ public class Imagenes extends javax.swing.JFrame {
         this.setTitle("Imágenes!!! :)");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.ponerImagenesEnBarraHerramientas();
+    }
+    void ponerImagenesEnBarraHerramientas(){
+        // Poner imagen de Einstein en la barra de herramientas
+        Image imagen = new ImageIcon(this.getClass().getResource("/imagenes/einstein.jpg")).getImage();
+        Image imagenEscalada = imagen.getScaledInstance(this.tglEinstein.getWidth(), this.tglEinstein.getHeight(), Image.SCALE_DEFAULT);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        this.tglEinstein.setIcon(iconoEscalado);
+        this.tglEinstein.setText("");
+        // Lo mismo con el gato
+        Image imagen2 = new ImageIcon(this.getClass().getResource("/imagenes/gato.jpg")).getImage();
+        Image imagenEscalada2 = imagen2.getScaledInstance(this.tglGato.getWidth(), this.tglGato.getHeight(), Image.SCALE_DEFAULT);
+        ImageIcon iconoEscalado2 = new ImageIcon(imagenEscalada2);
+        this.tglGato.setIcon(iconoEscalado2);
+        this.tglGato.setText("");
     }
 
     /**
@@ -36,13 +51,20 @@ public class Imagenes extends javax.swing.JFrame {
     private void initComponents() {
 
         btgRadios = new javax.swing.ButtonGroup();
+        jToolBar1 = new javax.swing.JToolBar();
+        btgToggle = new javax.swing.ButtonGroup();
         lblImagen = new javax.swing.JLabel();
         radEinstein = new javax.swing.JRadioButton();
         radGato = new javax.swing.JRadioButton();
+        tlbBarra = new javax.swing.JToolBar();
+        tglEinstein = new javax.swing.JToggleButton();
+        tglGato = new javax.swing.JToggleButton();
         mnuMenu = new javax.swing.JMenuBar();
         mnuImagenes = new javax.swing.JMenu();
         mnuEinstein = new javax.swing.JMenuItem();
         mnuGato = new javax.swing.JMenuItem();
+
+        jToolBar1.setRollover(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +77,25 @@ public class Imagenes extends javax.swing.JFrame {
         btgRadios.add(radGato);
         radGato.setText("Gato");
         radGato.addActionListener(this::radGatoActionPerformed);
+
+        tlbBarra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tlbBarra.setRollover(true);
+
+        btgToggle.add(tglEinstein);
+        tglEinstein.setText("Einstein");
+        tglEinstein.setFocusable(false);
+        tglEinstein.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        tglEinstein.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        tglEinstein.addActionListener(this::tglEinsteinActionPerformed);
+        tlbBarra.add(tglEinstein);
+
+        btgToggle.add(tglGato);
+        tglGato.setText("Gato");
+        tglGato.setFocusable(false);
+        tglGato.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        tglGato.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        tglGato.addActionListener(this::tglGatoActionPerformed);
+        tlbBarra.add(tglGato);
 
         mnuImagenes.setText("Imagenes");
 
@@ -77,18 +118,26 @@ public class Imagenes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radEinstein)
-                    .addComponent(radGato))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radEinstein)
+                            .addComponent(radGato))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tlbBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
                 .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
+                .addContainerGap()
+                .addComponent(tlbBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
                 .addComponent(radEinstein)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radGato)
@@ -118,6 +167,14 @@ public class Imagenes extends javax.swing.JFrame {
         this.mostrarGato();
     }//GEN-LAST:event_mnuGatoActionPerformed
 
+    private void tglEinsteinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglEinsteinActionPerformed
+        this.mostrarEinstein();
+    }//GEN-LAST:event_tglEinsteinActionPerformed
+
+    private void tglGatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglGatoActionPerformed
+        this.mostrarGato();
+    }//GEN-LAST:event_tglGatoActionPerformed
+
     void mostrarEinstein(){
         /*Icon icono = new ImageIcon(this.getClass().getResource("einstein.jpg"));
         this.lblImagen.setIcon(icono);*/
@@ -126,6 +183,7 @@ public class Imagenes extends javax.swing.JFrame {
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
         this.lblImagen.setIcon(iconoEscalado);
         this.radEinstein.setSelected(true);
+        this.tglEinstein.setSelected(true);
     }
     void mostrarGato(){
         Image imagen = new ImageIcon(this.getClass().getResource("/imagenes/gato.jpg")).getImage();
@@ -133,6 +191,7 @@ public class Imagenes extends javax.swing.JFrame {
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
         this.lblImagen.setIcon(iconoEscalado);
         this.radGato.setSelected(true);
+        this.tglGato.setSelected(true);
     }
     /**
      * @param args the command line arguments
@@ -161,6 +220,8 @@ public class Imagenes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgRadios;
+    private javax.swing.ButtonGroup btgToggle;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JMenuItem mnuEinstein;
     private javax.swing.JMenuItem mnuGato;
@@ -168,5 +229,8 @@ public class Imagenes extends javax.swing.JFrame {
     private javax.swing.JMenuBar mnuMenu;
     private javax.swing.JRadioButton radEinstein;
     private javax.swing.JRadioButton radGato;
+    private javax.swing.JToggleButton tglEinstein;
+    private javax.swing.JToggleButton tglGato;
+    private javax.swing.JToolBar tlbBarra;
     // End of variables declaration//GEN-END:variables
 }
