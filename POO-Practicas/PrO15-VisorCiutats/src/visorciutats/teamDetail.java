@@ -4,6 +4,9 @@
  */
 package visorciutats;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author victormarne
@@ -13,9 +16,28 @@ public class teamDetail extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(teamDetail.class.getName());
     
     String equipo;
+    String jugador;
     String[] TeamHeretics = new String[]{"RieNs","Wo0t","benjyfishy"};
     String[] PaperRex = new String[]{"f0rsakeN","something","Jinggg"};
     String[] FNATIC = new String[]{"Boaster","kaajak","Leo"};
+    String RieNs = new String("Enes \"RieNs\" Ecirli (born May 20, 2005) is a Turkish player who is currently playing for Team Heretics.\n" +
+"");
+    String Wo0t = new String("Mert \"Wo0t\" Alkan (born March 16, 2006) is a Turkish player who is currently playing for Team Heretics.\n" +
+"");
+    String benjyfishy = new String("Benjy \"benjyfishy\" Fish (born April 2, 2004) is a British player who is currently playing for Team Heretics.\n" +
+"");
+    String f0rsaken = new String("Jason \"f0rsakeN\" Susanto (born March 25, 2004) is an Indonesian player who is currently playing for Paper Rex. He is a former Counter-Strike: Global Offensive player. He is Kevin \"xccurate\" Susanto's younger brother.\n" +
+"");
+    String something = new String ("Ilia \"something\" Petrov (born February 11, 2002) is a Russian player who is currently playing for Paper Rex.\n" +
+"");
+    String Jinggg = new String ("Wang \"Jinggg\" Jing Jie (born July 29, 2003) is a Singaporean player who is currently playing for Paper Rex.\n" +
+"");
+    String Boaster = new String("Jake \"Boaster\" Howlett (born May 25, 1995) is a British player who is currently playing as an In-game leader for Fnatic. He is a former Counter-Strike: Global Offensive player who played for various different British rosters. He was also a Vlogger/Substitute Midlaner for Excel Esports in League of Legends.\n" +
+"");
+    String kaajak = new String ("Kajetan \"kaajak\" Haremski (born August 8, 2004) is a Polish player who is currently playing for Fnatic.\n" +
+"");
+    String Leo = new String ("Leo \"Leo\" Jannesson (born December 15, 2003) is a retired Swedish player who last played for Fnatic.\n" +
+"");
             
     public teamDetail() {
         initComponents();
@@ -70,6 +92,8 @@ public class teamDetail extends javax.swing.JFrame {
         lblPlayerImage = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         tglDetailsPlayer = new javax.swing.JToggleButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtaPlayerDetails = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,14 +109,23 @@ public class teamDetail extends javax.swing.JFrame {
 
         btgPlayers.add(radPlayer2);
         radPlayer2.setText("Player 2");
+        radPlayer2.addActionListener(this::radPlayer2ActionPerformed);
 
         btgPlayers.add(radPlayer3);
         radPlayer3.setText("Player 3");
+        radPlayer3.addActionListener(this::radPlayer3ActionPerformed);
 
         btnExit.setText("Exit");
         btnExit.addActionListener(this::btnExitActionPerformed);
 
         tglDetailsPlayer.setText("Toggle Details");
+        tglDetailsPlayer.addActionListener(this::tglDetailsPlayerActionPerformed);
+
+        txtaPlayerDetails.setEditable(false);
+        txtaPlayerDetails.setColumns(20);
+        txtaPlayerDetails.setLineWrap(true);
+        txtaPlayerDetails.setRows(5);
+        jScrollPane1.setViewportView(txtaPlayerDetails);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,23 +135,20 @@ public class teamDetail extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBack)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTeamName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnExit)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTeamName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExit))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(radPlayer1)
                             .addComponent(radPlayer2)
-                            .addComponent(radPlayer3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
-                        .addComponent(lblPlayerImage, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                            .addComponent(radPlayer3)
+                            .addComponent(btnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPlayerImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tglDetailsPlayer)
@@ -142,9 +172,15 @@ public class teamDetail extends javax.swing.JFrame {
                     .addComponent(lblPlayerImage, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tglDetailsPlayer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(32, Short.MAX_VALUE))))
         );
 
         pack();
@@ -161,9 +197,67 @@ public class teamDetail extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void radPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radPlayer1ActionPerformed
-        
+        this.showPlayerImage(this.radPlayer1.getText());
+        this.tglDetailsPlayerActionPerformed(evt);
     }//GEN-LAST:event_radPlayer1ActionPerformed
 
+    private void radPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radPlayer2ActionPerformed
+        this.showPlayerImage(this.radPlayer2.getText());
+        this.tglDetailsPlayerActionPerformed(evt);
+
+    }//GEN-LAST:event_radPlayer2ActionPerformed
+
+    private void radPlayer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radPlayer3ActionPerformed
+        this.showPlayerImage(this.radPlayer3.getText());
+        this.tglDetailsPlayerActionPerformed(evt);
+
+    }//GEN-LAST:event_radPlayer3ActionPerformed
+
+    private void tglDetailsPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglDetailsPlayerActionPerformed
+        if(this.tglDetailsPlayer.isSelected()){
+            switch (jugador) {
+                case "RieNs":
+                    this.txtaPlayerDetails.setText(RieNs);
+                    break;
+                case "Wo0t":
+                    this.txtaPlayerDetails.setText(Wo0t);
+                    break;
+                case "benjyfishy":
+                    this.txtaPlayerDetails.setText(benjyfishy);
+                    break;
+                case "f0rsakeN":
+                    this.txtaPlayerDetails.setText(f0rsaken);
+                    break;
+                case "something":
+                    this.txtaPlayerDetails.setText(something);
+                    break;
+                case "Jinggg":
+                    this.txtaPlayerDetails.setText(Jinggg);
+                    break;
+                case "Boaster":
+                    this.txtaPlayerDetails.setText(Boaster);
+                    break;
+                case "kaajak":
+                    this.txtaPlayerDetails.setText(kaajak);
+                    break;
+                case "Leo":
+                    this.txtaPlayerDetails.setText(Leo);
+                    break;
+            }
+            this.txtaPlayerDetails.setVisible(true);
+        }else{
+            this.txtaPlayerDetails.setVisible(false);
+        }
+    }//GEN-LAST:event_tglDetailsPlayerActionPerformed
+
+    void showPlayerImage(String player){
+        this.jugador = player;
+        this.tglDetailsPlayer.setVisible(true);
+        Image playerImage = new ImageIcon(this.getClass().getResource("/imagenes/"+player+".jpg")).getImage();
+        Image imagenRescalada = playerImage.getScaledInstance(this.lblPlayerImage.getWidth(), this.lblPlayerImage.getHeight(), Image.SCALE_DEFAULT);
+        ImageIcon iconoEscalado = new ImageIcon(imagenRescalada);
+        this.lblPlayerImage.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -193,11 +287,13 @@ public class teamDetail extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btgPlayers;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnExit;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblPlayerImage;
     private javax.swing.JLabel lblTeamName;
     private javax.swing.JRadioButton radPlayer1;
     private javax.swing.JRadioButton radPlayer2;
     private javax.swing.JRadioButton radPlayer3;
     private javax.swing.JToggleButton tglDetailsPlayer;
+    private javax.swing.JTextArea txtaPlayerDetails;
     // End of variables declaration//GEN-END:variables
 }
