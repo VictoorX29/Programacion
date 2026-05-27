@@ -4,4 +4,10 @@ nbproject/private/
 *.class
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
 /Examenes/Examen/nbproject/private/
+=======
+/tutorial6 - editor de textos/Editor/nbproject/private/
+/tutorial7 - ventanas e imagenes/ventanas/nbproject/private/
+/tutorial7 - ventanas e imagenes/PrO15-VisorCiutats/nbproject/private/
+>>>>>>> de334e8cb918d4142366a7e2ff3b2fb4b4998567
