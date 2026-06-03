@@ -136,7 +136,7 @@ public class Formulario extends javax.swing.JFrame {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             
             // 2. Conectarnos a la Base de Datos Alumnos.accdb
-            String db="jdbc:ucanaccess://C:/Users/DAW1/Desktop/tutorial8-base-de-datos/Alumnos.accdb";
+            String db="jdbc:ucanaccess:///Users/victormarne/Documents/DAW1/Programacion/tutorial8-base-de-datos/Alumnos.accdb";
             Connection con = DriverManager.getConnection(db);
             
             // 3. Operamos con los registros
@@ -163,7 +163,7 @@ public class Formulario extends javax.swing.JFrame {
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             
-            String db="jdbc:ucanaccess://C:/Users/DAW1/Desktop/tutorial8-base-de-datos/Alumnos.accdb";
+            String db="jdbc:ucanaccess:///Users/victormarne/Documents/DAW1/Programacion/tutorial8-base-de-datos/Alumnos.accdb";
             Connection con = DriverManager.getConnection(db);
             
             Statement s = con.createStatement();
