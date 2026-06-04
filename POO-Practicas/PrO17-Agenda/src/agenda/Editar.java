@@ -198,12 +198,11 @@ public class Editar extends javax.swing.JFrame {
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             
-            String db="jdbc:ucanaccess:///Users/victormarne/Documents/DAW1/Programacion/POO-Practicas/PrO17-Agenda/Companys.accdb";
+            String db="jdbc:ucanaccess://Companys.accdb";
             Connection con = DriverManager.getConnection(db);
             
             Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            int res = s.executeUpdate("UPDATE Dades SET Nom='"+cont[0]+"',Mail='"+cont[1]+"',Cognom1='"+cont[2]+"',Cognom2='"+cont[3]+"',Telefon='"+cont[4]+"' WHERE Nom='"+this.nombre+"' ");
-            System.out.println(res + " registros actualizados.");
+            s.executeUpdate("UPDATE Dades SET Nom='"+cont[0]+"',Mail='"+cont[1]+"',Cognom1='"+cont[2]+"',Cognom2='"+cont[3]+"',Telefon='"+cont[4]+"' WHERE Nom='"+this.nombre+"' ");
         } catch (ClassNotFoundException ex) {
             System.out.println("Error al cargar el driver UCanAccess");
             System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

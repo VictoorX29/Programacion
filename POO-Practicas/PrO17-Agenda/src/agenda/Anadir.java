@@ -4,6 +4,12 @@
  */
 package agenda;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author victormarne
@@ -42,6 +48,7 @@ public class Anadir extends javax.swing.JFrame {
         lblEmail = new javax.swing.JLabel();
         lblTelf = new javax.swing.JLabel();
         iptTelf = new javax.swing.JTextField();
+        btnSend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +66,9 @@ public class Anadir extends javax.swing.JFrame {
         lblEmail.setText("Email");
 
         lblTelf.setText("Telefono");
+
+        btnSend.setText("Enviar");
+        btnSend.addActionListener(this::btnSendActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,7 +93,10 @@ public class Anadir extends javax.swing.JFrame {
                             .addComponent(iptAp1)
                             .addComponent(iptAp2)
                             .addComponent(iptEmail)
-                            .addComponent(iptTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(iptTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnSend)))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -111,7 +124,9 @@ public class Anadir extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelf)
                     .addComponent(iptTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(btnSend)
+                .addContainerGap())
         );
 
         pack();
@@ -126,6 +141,34 @@ public class Anadir extends javax.swing.JFrame {
     private void iptEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iptEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_iptEmailActionPerformed
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        String[] reg = new String[5];
+        reg[0]=this.iptNombre.getText();
+        reg[1]=this.iptEmail.getText();
+        reg[2]=this.iptAp1.getText();
+        reg[3]=this.iptAp2.getText();
+        reg[4]=this.iptTelf.getText();
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            
+            String db="jdbc:ucanaccess://Companys.accdb";
+            Connection con = DriverManager.getConnection(db);
+            
+            Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            String sentenciaSQL="insert into Dades (Nom,Mail,Cognom1,Cognom2,Telefon) values ('"+reg[0]+"','"+reg[1]+"','"+reg[2]+"','"+reg[3]+"','"+Integer.parseInt(reg[4])+"')";
+            s.executeUpdate(sentenciaSQL);
+            Todos t = new Todos();
+            t.setVisible(true);
+            this.dispose();
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error al cargar el driver UCanAccess");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.out.println("Error al concetarse al archivo de Access");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btnSendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,6 +197,7 @@ public class Anadir extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSend;
     private javax.swing.JTextField iptAp1;
     private javax.swing.JTextField iptAp2;
     private javax.swing.JTextField iptEmail;

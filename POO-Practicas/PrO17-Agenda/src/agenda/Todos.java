@@ -26,6 +26,7 @@ public class Todos extends javax.swing.JFrame {
     /** Creates new form Todos */
     public Todos() {
         initComponents();
+        //this.btnRestart.setVisible(false);
         this.setTitle("Todos los registros");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -37,7 +38,20 @@ public class Todos extends javax.swing.JFrame {
             System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
-
+    public Todos(String[] txtFiltro, String filtro){
+        initComponents();
+        this.setTitle("Registros filtrado por " + txtFiltro[0] + " = " + txtFiltro[1]);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.btnSearch.setText("Reiniciar");
+        this.obtenerFilas(filtro);
+        this.obtenerTabla(filtro);
+        try {
+            this.imprimirDatos("First");
+        } catch (SQLException ex) {
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -140,7 +154,7 @@ public class Todos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSearch))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
+                        .addGap(90, 90, 90)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -264,9 +278,16 @@ public class Todos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        Busqueda b = new Busqueda();
-        b.setVisible(true);
-        this.dispose();
+        if(this.btnSearch.getText().equals("Buscar")){
+            Busqueda b = new Busqueda();
+            b.setVisible(true);
+            this.dispose();
+        }else{
+            Todos t = new Todos();
+            t.setVisible(true);
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -280,7 +301,25 @@ public class Todos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        System.out.println("Borrar");
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            
+            String db="jdbc:ucanaccess://Companys.accdb";
+            Connection con = DriverManager.getConnection(db);
+            
+            Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            String sentenciaSQL="delete from Dades where Nom='"+contacto[0]+"' AND Mail='"+contacto[1]+"' AND Cognom1='"+contacto[2]+"' AND Cognom2='"+contacto[3]+"' AND Telefon='"+contacto[4]+"' ";
+            int borrar = s.executeUpdate(sentenciaSQL);
+            Todos t = new Todos();
+            t.setVisible(true);
+            this.dispose();
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error al cargar el driver UCanAccess");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.out.println("Error al concetarse al archivo de Access");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     
@@ -288,7 +327,7 @@ public class Todos extends javax.swing.JFrame {
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             
-            String db="jdbc:ucanaccess:///Users/victormarne/Documents/DAW1/Programacion/POO-Practicas/PrO17-Agenda/Companys.accdb";
+            String db="jdbc:ucanaccess://Companys.accdb";
             Connection con = DriverManager.getConnection(db);
             
             Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -304,16 +343,53 @@ public class Todos extends javax.swing.JFrame {
             System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
+    void obtenerFilas(String filtro){
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            
+            String db="jdbc:ucanaccess://Companys.accdb";
+            Connection con = DriverManager.getConnection(db);
+            
+            Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            String sentenciaSQL="select COUNT(*) from Dades where "+filtro+"";
+            filas = s.executeQuery(sentenciaSQL);
+            filas.next();
+            this.lblNFilas.setText(Integer.toString(filas.getInt(1)));
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error al cargar el driver UCanAccess");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.out.println("Error al concetarse al archivo de Access");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
     void obtenerTabla(){
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             
-            String db="jdbc:ucanaccess:///Users/victormarne/Documents/DAW1/Programacion/POO-Practicas/PrO17-Agenda/Companys.accdb";
+            String db="jdbc:ucanaccess://Companys.accdb";
             Connection con = DriverManager.getConnection(db);
             
             Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             String sentenciaSQL="select * from Dades ORDER BY Nom";
             resultado = s.executeQuery(sentenciaSQL);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error al cargar el driver UCanAccess");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            System.out.println("Error al concetarse al archivo de Access");
+            System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+    void obtenerTabla(String sentenciaSQL){
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            
+            String db="jdbc:ucanaccess://Companys.accdb";
+            Connection con = DriverManager.getConnection(db);
+            
+            Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            resultado = s.executeQuery("select * from Dades where "+sentenciaSQL+" ORDER BY Nom");
         } catch (ClassNotFoundException ex) {
             System.out.println("Error al cargar el driver UCanAccess");
             System.getLogger(Todos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
